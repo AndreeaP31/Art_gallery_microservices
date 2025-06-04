@@ -1,0 +1,68 @@
+<div class="login-container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h2>{{ 'AUTH.LOGIN' | translate }}</h2>
+    </div>
+    <div class="card-body">
+      <!-- Error Alert -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Username Field -->
+        <div class="form-group mb-3">
+          <label for="username">{{ 'AUTH.USERNAME' | translate }}</label>
+          <input 
+            type="text" 
+            id="username" 
+            formControlName="username" 
+            class="form-control" 
+            [ngClass]="{ 'is-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched }"
+          />
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="invalid-feedback">
+            {{ 'AUTH.USERNAME' | translate }} {{ 'COMMON.IS_REQUIRED' | translate }}
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+          <label for="password">{{ 'AUTH.PASSWORD' | translate }}</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            [ngClass]="{ 'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
+          />
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-feedback">
+            {{ 'AUTH.PASSWORD' | translate }} {{ 'COMMON.IS_REQUIRED' | translate }}
+          </div>
+        </div>
+
+        <!-- Forgot Password Link -->
+        <div class="text-end mb-3">
+          <a href="#" class="text-decoration-none">{{ 'AUTH.FORGOT_PASSWORD' | translate }}</a>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            [disabled]="loginForm.invalid || loading"
+          >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ 'AUTH.SIGN_IN' | translate }}
+          </button>
+        </div>
+      </form>
+
+      <!-- Register Link -->
+      <div class="text-center mt-3">
+        <p>{{ 'AUTH.NO_ACCOUNT' | translate }} <a (click)="navigateToRegister()" class="text-decoration-none cursor-pointer">{{ 'AUTH.SIGN_UP' | translate }}</a></p>
+      </div>
+    </div>
+  </div>
+</div>

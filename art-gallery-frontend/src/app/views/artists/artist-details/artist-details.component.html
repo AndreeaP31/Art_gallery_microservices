@@ -1,0 +1,93 @@
+<div class="artist-details-container">
+  <div class="container py-4">
+    <!-- Back Button -->
+    <div class="mb-4">
+      <a routerLink="/artists" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> {{ 'COMMON.BACK' | translate }}
+      </a>
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+      </div>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-danger mx-auto my-4" style="max-width: 800px;">
+      {{ error }}
+    </div>
+    
+    <!-- Artist Details -->
+    <div *ngIf="!loading && artist" class="artist-details">
+      <div class="row">
+        <!-- Artist Photo -->
+        <div class="col-md-4 mb-4">
+          <div class="artist-photo">
+            <img [src]="artist.photoUrl || 'assets/placeholder-artist.jpg'" class="img-fluid rounded" alt="{{ artist.name }}">
+          </div>
+          
+          <!-- Edit Button (for authorized users) -->
+          <div *ngIf="canEdit" class="mt-3">
+            <button class="btn btn-primary">
+              {{ 'COMMON.EDIT' | translate }}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Artist Info -->
+        <div class="col-md-8">
+          <h1 class="mb-3">{{ artist.name }}</h1>
+          
+          <div class="artist-info mb-4">
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>{{ 'ARTIST.NATIONALITY' | translate }}:</strong> {{ artist.nationality }}</p>
+                <p><strong>{{ 'ARTIST.BIRTH_DATE' | translate }}:</strong> {{ artist.birthDate | date }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>{{ 'ARTIST.BIRTH_PLACE' | translate }}:</strong> {{ artist.birthPlace }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="artist-biography mb-4">
+            <h3>{{ 'ARTIST.BIOGRAPHY' | translate }}</h3>
+            <p>{{ artist.biography }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Artist Artworks -->
+      <div class="artist-artworks mt-5">
+        <h2 class="mb-4">{{ 'ARTIST.ARTWORKS' | translate }}</h2>
+        
+        <div *ngIf="artworks.length === 0" class="text-center py-3">
+          <p>{{ 'COMMON.NO_RESULTS' | translate }}</p>
+        </div>
+        
+        <div *ngIf="artworks.length > 0" class="row">
+          <div *ngFor="let artwork of artworks" class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img [src]="artwork.imageUrl || 'assets/placeholder-artwork.jpg'" class="card-img-top" alt="{{ artwork.title }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ artwork.title }}</h5>
+                <p class="card-text">{{ artwork.creationYear }}</p>
+                <p class="card-text">
+                  <span [ngClass]="{'text-success': !artwork.sold, 'text-danger': artwork.sold}">
+                    {{ artwork.sold ? ('ARTWORK.SOLD' | translate) : ('ARTWORK.AVAILABLE' | translate) }}
+                  </span>
+                  <span *ngIf="!artwork.sold" class="ms-2">{{ artwork.price | currency }}</span>
+                </p>
+                <a [routerLink]="['/artworks', artwork.id]" class="btn btn-sm btn-outline-secondary">
+                  {{ 'ARTWORK.DETAILS' | translate }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+.artist-details-container {
+  margin-bottom: 2rem;
+}
+
+.artist-photo {
+  img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+}
+
+.artist-info {
+  p {
+    margin-bottom: 0.5rem;
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+}
+
+.artist-biography {
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+}
+
+.artist-artworks {
+  h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .artist-photo {
+    margin-bottom: 2rem;
+  }
+}

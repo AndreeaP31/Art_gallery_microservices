@@ -1,0 +1,157 @@
+<div class="artwork-list-container">
+  <div class="container py-4">
+    <h1 class="mb-4">{{ 'NAV.ARTWORKS' | translate }}</h1>
+    
+    <div class="row">
+      <!-- Filter Panel -->
+      <div class="col-md-3">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">{{ 'ARTWORK.FILTER' | translate }}</h5>
+          </div>
+          <div class="card-body">
+            <form>
+              <!-- Artist Filter -->
+              <div class="mb-3">
+                <label for="artistFilter" class="form-label">{{ 'ARTWORK.ARTIST' | translate }}</label>
+                <select class="form-select" id="artistFilter" [(ngModel)]="filter.artistId" name="artistId">
+                  <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
+                  <option *ngFor="let artist of artists" [value]="artist.id">{{ artist.name }}</option>
+                </select>
+              </div>
+              
+              <!-- Type Filter -->
+              <div class="mb-3">
+                <label for="typeFilter" class="form-label">{{ 'ARTWORK.TYPE' | translate }}</label>
+                <select class="form-select" id="typeFilter" [(ngModel)]="filter.type" name="type">
+                  <option [ngValue]="undefined">{{ 'COMMON.ALL' | translate }}</option>
+                  <option *ngFor="let type of artworkTypes" [value]="type">{{ type }}</option>
+                </select>
+              </div>
+              
+              <!-- Year Range Filter -->
+              <div class="mb-3">
+                <label class="form-label">{{ 'ARTWORK.YEAR' | translate }}</label>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Min" [(ngModel)]="filter.minYear" name="minYear">
+                  </div>
+                  <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Max" [(ngModel)]="filter.maxYear" name="maxYear">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Price Range Filter -->
+              <div class="mb-3">
+                <label class="form-label">{{ 'ARTWORK.PRICE' | translate }}</label>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Min" [(ngModel)]="filter.minPrice" name="minPrice">
+                  </div>
+                  <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Max" [(ngModel)]="filter.maxPrice" name="maxPrice">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Availability Filter -->
+              <div class="mb-3">
+                <label class="form-label">{{ 'COMMON.STATUS' | translate }}</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="soldFilter" id="allArtworks" [value]="undefined" [(ngModel)]="filter.sold">
+                  <label class="form-check-label" for="allArtworks">
+                    {{ 'COMMON.ALL' | translate }}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="soldFilter" id="availableArtworks" [value]="false" [(ngModel)]="filter.sold">
+                  <label class="form-check-label" for="availableArtworks">
+                    {{ 'ARTWORK.AVAILABLE' | translate }}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="soldFilter" id="soldArtworks" [value]="true" [(ngModel)]="filter.sold">
+                  <label class="form-check-label" for="soldArtworks">
+                    {{ 'ARTWORK.SOLD' | translate }}
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Filter Buttons -->
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-primary" (click)="applyFilter()">
+                  {{ 'COMMON.APPLY' | translate }}
+                </button>
+                <button type="button" class="btn btn-outline-secondary" (click)="clearFilters()">
+                  {{ 'COMMON.CLEAR' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Artwork List -->
+      <div class="col-md-9">
+        <!-- Search Bar -->
+        <div class="mb-4">
+          <div class="input-group">
+            <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="searchQuery" 
+              placeholder="{{ 'ARTWORK.SEARCH' | translate }}"
+              (keyup.enter)="search()">
+            <button class="btn btn-primary" type="button" (click)="search()">
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button *ngIf="searchQuery" class="btn btn-secondary" type="button" (click)="clearSearch()">
+              {{ 'COMMON.CLEAR' | translate }}
+            </button>
+          </div>
+        </div>
+        
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+          </div>
+        </div>
+        
+        <!-- Error Message -->
+        <div *ngIf="error" class="alert alert-danger mx-auto my-4">
+          {{ error }}
+        </div>
+        
+        <!-- No Results Message -->
+        <div *ngIf="!loading && artworks.length === 0" class="text-center py-5">
+          <p class="lead">{{ 'COMMON.NO_RESULTS' | translate }}</p>
+        </div>
+        
+        <!-- Artworks Grid -->
+        <div *ngIf="!loading && artworks.length > 0" class="row">
+          <div *ngFor="let artwork of artworks" class="col-md-4 mb-4">
+            <div class="card h-100">
+              <img [src]="artwork.imageUrl || 'assets/placeholder-artwork.jpg'" class="card-img-top" alt="{{ artwork.title }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ artwork.title }}</h5>
+                <p class="card-text">{{ artwork.artistName }}</p>
+                <p class="card-text"><small class="text-muted">{{ artwork.creationYear }}</small></p>
+                <p class="card-text">
+                  <span [ngClass]="{'text-success': !artwork.sold, 'text-danger': artwork.sold}">
+                    {{ artwork.sold ? ('ARTWORK.SOLD' | translate) : ('ARTWORK.AVAILABLE' | translate) }}
+                  </span>
+                  <span *ngIf="!artwork.sold" class="ms-2">{{ artwork.price | currency }}</span>
+                </p>
+                <a [routerLink]="['/artworks', artwork.id]" class="btn btn-sm btn-outline-primary">
+                  {{ 'ARTWORK.DETAILS' | translate }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="artwork-details-container">
+  <div class="container py-4">
+    <!-- Back Button -->
+    <div class="mb-4">
+      <a routerLink="/artworks" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> {{ 'COMMON.BACK' | translate }}
+      </a>
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+      </div>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-danger mx-auto my-4" style="max-width: 800px;">
+      {{ error }}
+    </div>
+    
+    <!-- Artwork Details -->
+    <div *ngIf="!loading && artwork" class="artwork-details">
+      <div class="row">
+        <!-- Artwork Images -->
+        <div class="col-md-6 mb-4">
+          <div class="artwork-images">
+            <div *ngIf="artwork.imageUrls && artwork.imageUrls.length > 0" class="main-image mb-3">
+              <img [src]="artwork.imageUrls[0]" class="img-fluid rounded" alt="{{ artwork.title }}">
+            </div>
+            <div *ngIf="!artwork.imageUrls || artwork.imageUrls.length === 0" class="main-image mb-3">
+              <img src="assets/placeholder-artwork.jpg" class="img-fluid rounded" alt="{{ artwork.title }}">
+            </div>
+            
+            <!-- Thumbnail Images -->
+            <div *ngIf="artwork.imageUrls && artwork.imageUrls.length > 1" class="thumbnail-images row">
+              <div *ngFor="let imageUrl of artwork.imageUrls.slice(1)" class="col-3 mb-2">
+                <img [src]="imageUrl" class="img-fluid rounded thumbnail" alt="{{ artwork.title }}">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Artwork Info -->
+        <div class="col-md-6">
+          <h1 class="mb-3">{{ artwork.title }}</h1>
+          
+          <div class="artwork-meta mb-4">
+            <p class="artist-name">
+              <strong>{{ 'ARTWORK.CREATED_BY' | translate }}:</strong> 
+              <a [routerLink]="['/artists', artwork.artistId]">{{ artwork.artist?.name }}</a>
+            </p>
+            <p><strong>{{ 'ARTWORK.YEAR' | translate }}:</strong> {{ artwork.creationYear }}</p>
+            <p><strong>{{ 'ARTWORK.TYPE' | translate }}:</strong> {{ artwork.type }}</p>
+            <p><strong>{{ 'ARTWORK.DIMENSIONS' | translate }}:</strong> {{ artwork.dimensions }}</p>
+            <p>
+              <strong>{{ 'ARTWORK.PRICE' | translate }}:</strong> 
+              <span class="price">{{ artwork.price | currency }}</span>
+            </p>
+            <p>
+              <strong>{{ 'COMMON.STATUS' | translate }}:</strong> 
+              <span [ngClass]="{'text-success': !artwork.sold, 'text-danger': artwork.sold}">
+                {{ artwork.sold ? ('ARTWORK.SOLD' | translate) : ('ARTWORK.AVAILABLE' | translate) }}
+              </span>
+            </p>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="artwork-actions mb-4">
+            <button *ngIf="canSell && !artwork.sold" class="btn btn-success me-2" (click)="sellArtwork()">
+              {{ 'ARTWORK.BUY' | translate }}
+            </button>
+            <button *ngIf="canEdit" class="btn btn-primary">
+              {{ 'COMMON.EDIT' | translate }}
+            </button>
+          </div>
+          
+          <!-- Artwork Description -->
+          <div class="artwork-description mb-4">
+            <h3>{{ 'COMMON.DESCRIPTION' | translate }}</h3>
+            <p>{{ artwork.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section text-center py-5">
+    <div class="container">
+      <h1 class="display-4">{{ 'HOME.WELCOME' | translate }}</h1>
+      <p class="lead">{{ 'HOME.SUBTITLE' | translate }}</p>
+      <a routerLink="/artworks" class="btn btn-primary btn-lg mt-3">
+        {{ 'HOME.EXPLORE' | translate }}
+      </a>
+    </div>
+  </section>
+
+  <!-- Loading and Error States -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mx-auto my-4" style="max-width: 800px;">
+    {{ error }}
+  </div>
+
+  <!-- Featured Artworks Section -->
+  <section *ngIf="!loading && featuredArtworks.length > 0" class="featured-artworks py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ 'HOME.FEATURED_ARTWORKS' | translate }}</h2>
+        <a routerLink="/artworks" class="btn btn-outline-primary">
+          {{ 'HOME.VIEW_ALL' | translate }}
+        </a>
+      </div>
+      
+      <div class="row">
+        <div *ngFor="let artwork of featuredArtworks" class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img [src]="artwork.imageUrl || 'assets/placeholder-artwork.jpg'" class="card-img-top" alt="{{ artwork.title }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ artwork.title }}</h5>
+              <p class="card-text">{{ artwork.artistName }} ({{ artwork.creationYear }})</p>
+              <p class="card-text">
+                <span [ngClass]="{'text-success': !artwork.sold, 'text-danger': artwork.sold}">
+                  {{ artwork.sold ? ('ARTWORK.SOLD' | translate) : ('ARTWORK.AVAILABLE' | translate) }}
+                </span>
+                <span *ngIf="!artwork.sold" class="ms-2">{{ artwork.price | currency }}</span>
+              </p>
+              <a [routerLink]="['/artworks', artwork.id]" class="btn btn-sm btn-outline-secondary">
+                {{ 'ARTWORK.DETAILS' | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Artists Section -->
+  <section *ngIf="!loading && featuredArtists.length > 0" class="featured-artists py-5 bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ 'HOME.FEATURED_ARTISTS' | translate }}</h2>
+        <a routerLink="/artists" class="btn btn-outline-primary">
+          {{ 'HOME.VIEW_ALL' | translate }}
+        </a>
+      </div>
+      
+      <div class="row">
+        <div *ngFor="let artist of featuredArtists" class="col-md-3 mb-4">
+          <div class="card h-100">
+            <img [src]="artist.photoUrl || 'assets/placeholder-artist.jpg'" class="card-img-top" alt="{{ artist.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ artist.name }}</h5>
+              <p class="card-text">{{ artist.nationality }}</p>
+              <a [routerLink]="['/artists', artist.id]" class="btn btn-sm btn-outline-secondary">
+                {{ 'ARTIST.VIEW_PROFILE' | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

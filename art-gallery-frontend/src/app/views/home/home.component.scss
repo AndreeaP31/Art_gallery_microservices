@@ -1,0 +1,136 @@
+.home-container {
+  margin-bottom: 2rem;
+}
+
+.hero-section {
+  background-image: var(--bg-gradient-teal);
+  padding: 4rem 0;
+  margin-bottom: 2rem;
+  color: var(--text-light);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+}
+
+.featured-artworks {
+  padding: 3rem 0;
+  background-color: var(--bg-light);
+
+  h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-teal);
+    }
+  }
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      color: var(--primary-color);
+    }
+
+    &:nth-child(3n+1) {
+      border-top: 4px solid var(--accent-teal);
+    }
+
+    &:nth-child(3n+2) {
+      border-top: 4px solid var(--accent-purple);
+    }
+
+    &:nth-child(3n+3) {
+      border-top: 4px solid var(--accent-orange);
+    }
+  }
+}
+
+.featured-artists {
+  padding: 3rem 0;
+  background-image: var(--bg-gradient-primary);
+  color: var(--text-light);
+
+  h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-yellow);
+    }
+  }
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    img {
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      color: var(--primary-color);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 0;
+  }
+
+  .featured-artworks, .featured-artists {
+    padding: 2rem 0;
+  }
+}

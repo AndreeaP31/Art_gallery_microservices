@@ -1,0 +1,73 @@
+// Custom styles for the app component
+
+// Navbar styles
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-image: var(--bg-gradient-primary) !important;
+
+  .navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-light) !important;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    color: var(--text-light) !important;
+
+    &.active {
+      color: var(--accent-yellow) !important;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    &:hover {
+      color: var(--accent-yellow) !important;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Language dropdown styles
+.dropdown-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+// Footer styles
+footer {
+  margin-top: 3rem;
+  background-image: var(--bg-gradient-purple) !important;
+
+  h5 {
+    color: var(--accent-yellow);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    color: var(--text-light) !important;
+
+    &:hover {
+      color: var(--accent-yellow) !important;
+      text-decoration: none;
+      transform: translateX(3px);
+    }
+  }
+
+  hr {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Main content area
+main {
+  min-height: calc(100vh - 300px); // Ensure footer stays at bottom
+  padding-bottom: 2rem;
+}

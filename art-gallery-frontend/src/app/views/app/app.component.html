@@ -1,0 +1,78 @@
+<header class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">{{ 'APP.TITLE' | translate }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'NAV.HOME' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/artworks" routerLinkActive="active">{{ 'NAV.ARTWORKS' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/artists" routerLinkActive="active">{{ 'NAV.ARTISTS' | translate }}</a>
+        </li>
+      </ul>
+      
+      <!-- Language Selector -->
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ 'NAV.LANGUAGE' | translate }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+          <li><a class="dropdown-item" (click)="switchLanguage('en')">English</a></li>
+          <li><a class="dropdown-item" (click)="switchLanguage('fr')">Français</a></li>
+          <li><a class="dropdown-item" (click)="switchLanguage('es')">Español</a></li>
+        </ul>
+      </div>
+      
+      <!-- Login/Register or User Menu -->
+      <ul class="navbar-nav ms-2">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">{{ 'NAV.LOGIN' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">{{ 'NAV.REGISTER' | translate }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="container mt-4">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="bg-dark text-white mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>{{ 'FOOTER.ABOUT' | translate }}</h5>
+        <p>{{ 'FOOTER.DESCRIPTION' | translate }}</p>
+      </div>
+      <div class="col-md-3">
+        <h5>{{ 'FOOTER.LINKS' | translate }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">{{ 'FOOTER.PRIVACY' | translate }}</a></li>
+          <li><a href="#" class="text-white">{{ 'FOOTER.TERMS' | translate }}</a></li>
+          <li><a href="#" class="text-white">{{ 'FOOTER.CONTACT' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5>{{ 'FOOTER.SOCIAL' | translate }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Facebook</a></li>
+          <li><a href="#" class="text-white">Twitter</a></li>
+          <li><a href="#" class="text-white">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center">
+      <p>© 2023 {{ 'APP.TITLE' | translate }}. {{ 'FOOTER.RIGHTS' | translate }}</p>
+    </div>
+  </div>
+</footer>

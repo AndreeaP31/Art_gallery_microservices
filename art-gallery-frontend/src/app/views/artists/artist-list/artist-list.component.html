@@ -1,0 +1,58 @@
+<div class="artist-list-container">
+  <div class="container py-4">
+    <h1 class="mb-4">{{ 'NAV.ARTISTS' | translate }}</h1>
+    
+    <!-- Search Bar -->
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="searchQuery" 
+            placeholder="{{ 'ARTIST.SEARCH' | translate }}"
+            (keyup.enter)="search()">
+          <button class="btn btn-primary" type="button" (click)="search()">
+            {{ 'COMMON.SEARCH' | translate }}
+          </button>
+          <button *ngIf="searchQuery" class="btn btn-secondary" type="button" (click)="clearSearch()">
+            {{ 'COMMON.CLEAR' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+      </div>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-danger mx-auto my-4" style="max-width: 800px;">
+      {{ error }}
+    </div>
+    
+    <!-- No Results Message -->
+    <div *ngIf="!loading && artists.length === 0" class="text-center py-5">
+      <p class="lead">{{ 'COMMON.NO_RESULTS' | translate }}</p>
+    </div>
+    
+    <!-- Artists Grid -->
+    <div *ngIf="!loading && artists.length > 0" class="row">
+      <div *ngFor="let artist of artists" class="col-md-3 mb-4">
+        <div class="card h-100">
+          <img [src]="artist.photoUrl || 'assets/placeholder-artist.jpg'" class="card-img-top" alt="{{ artist.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ artist.name }}</h5>
+            <p class="card-text">{{ artist.nationality }}</p>
+            <a [routerLink]="['/artists', artist.id]" class="btn btn-outline-primary">
+              {{ 'ARTIST.VIEW_PROFILE' | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

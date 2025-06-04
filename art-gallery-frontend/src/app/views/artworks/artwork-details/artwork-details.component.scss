@@ -1,0 +1,68 @@
+.artwork-details-container {
+  margin-bottom: 2rem;
+}
+
+.artwork-images {
+  .main-image {
+    img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  }
+  
+  .thumbnail-images {
+    .thumbnail {
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.artwork-meta {
+  p {
+    margin-bottom: 0.5rem;
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  .price {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .artist-name {
+    a {
+      color: #007bff;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.artwork-description {
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .artwork-images {
+    margin-bottom: 2rem;
+  }
+}
